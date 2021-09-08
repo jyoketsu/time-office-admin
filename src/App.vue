@@ -1,11 +1,24 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from "./components/HelloWorld.vue";
+<script lang="ts">
+import { computed, defineComponent, onMounted, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+export default defineComponent({
+  setup() {
+    const router = useRouter();
+    const store = useStore();
+    const expired = computed(() => store.state.auth.expired);
+
+    watchEffect(() => {
+      if (expired.value) {
+        router.push("/welcome");
+      }
+    });
+  },
+});
 </script>
 
 <template>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
   <router-view></router-view>
 </template>
 
@@ -16,6 +29,8 @@ import HelloWorld from "./components/HelloWorld.vue";
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+body {
+  margin: unset;
 }
 </style>

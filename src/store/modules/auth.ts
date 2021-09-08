@@ -26,6 +26,7 @@ const actions: ActionTree<AuthState, RootState> = {
   async getUserByToken({ commit }, token: string) {
     const res: any = await api.auth.loginByToken(token);
     if (res.statusCode === "200") {
+      api.setToken(token);
       const user = res.result;
       commit("setUser", user);
     } else {
