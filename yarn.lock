@@ -20,6 +20,11 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@element-plus/icons@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@element-plus/icons/-/icons-0.0.11.tgz#9b187c002774548b911850d17fa5fc2f9a515f57"
+  integrity sha512-iKQXSxXu131Ai+I9Ymtcof9WId7kaXvB1+WRfAfpQCW7UiAMYgdNDqb/u0hgTo2Yq3MwC4MWJnNuTBEpG8r7+A==
+
 "@emmetio/abbreviation@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@emmetio/abbreviation/-/abbreviation-2.2.2.tgz#746762fd9e7a8c2ea604f580c62e3cfe250e6989"
@@ -39,7 +44,7 @@
   resolved "https://registry.yarnpkg.com/@emmetio/scanner/-/scanner-1.0.0.tgz#065b2af6233fe7474d44823e3deb89724af42b5f"
   integrity sha512-8HqW8EVqjnCmWXVpqAOZf+EGESdkR27odcMMMGefgKXtar00SoYNSryGv//TELI4T3QFsECo78p+0lmalk/CFA==
 
-"@popperjs/core@^2.4.4":
+"@popperjs/core@^2.10.1":
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.1.tgz#728ecd95ab207aab8a9a4e421f0422db329232be"
   integrity sha512-HnUhk1Sy9IuKrxEMdIRCxpIqPw6BFsbYSEUO9p/hNw5sMld/+3OLMWQP80F8/db9qsv3qUjs7ZR5bS/R+iinXw==
@@ -368,15 +373,16 @@ domutils@^2.5.2:
     domelementtype "^2.2.0"
     domhandler "^4.2.0"
 
-element-plus@1.0.2-beta.35:
-  version "1.0.2-beta.35"
-  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.0.2-beta.35.tgz#158890bddf28f8495f261d02789bf394c5c97123"
-  integrity sha512-T12EfxbWoNOrWE2bzXFPJdOU3cl4YWuLwxE5QKM40oPw1VYPMRrRB8Uy5TwF8h3itxzsJQ5iFj2rdDO+q3Jcdg==
+element-plus@1.1.0-beta.9:
+  version "1.1.0-beta.9"
+  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.1.0-beta.9.tgz#e193cc956dfc9b731ed5cb32e2df0eddafd95dcd"
+  integrity sha512-QA5jOHDGSDJqVGAgzNrv5TTd/bLW+zICWy1ZQuvShzfrrIX8W+xL3RZdHJWANHhbBetLBHPFMvEzLSPvPmUosw==
   dependencies:
-    "@popperjs/core" "^2.4.4"
+    "@element-plus/icons" "^0.0.11"
+    "@popperjs/core" "^2.10.1"
     async-validator "^3.4.0"
     dayjs "1.x"
-    lodash "^4.17.20"
+    lodash "^4.17.21"
     mitt "^2.1.0"
     normalize-wheel "^1.0.1"
     resize-observer-polyfill "^1.5.1"
@@ -594,7 +600,7 @@ lodash.camelcase@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
 
-lodash@^4.17.20:
+lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
