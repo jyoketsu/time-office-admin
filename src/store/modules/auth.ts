@@ -1,7 +1,7 @@
 import api from "../../util/api";
 import { MutationTree, ActionTree, Module } from "vuex";
-import { AuthState } from "../types/AuthType";
-import { RootState } from "../types/RootType";
+import { AuthState } from "../types/AuthState";
+import { RootState } from "../types/RootState";
 
 const state: AuthState = {
   user: null,
@@ -18,6 +18,7 @@ const mutations: MutationTree<AuthState> = {
   clearUser(state) {
     state.user = null;
     state.expired = true;
+    localStorage.clear();
   },
 };
 
@@ -28,10 +29,25 @@ const actions: ActionTree<AuthState, RootState> = {
     if (res.statusCode === "200") {
       api.setToken(token);
       const user = res.result;
-      commit("setUser", user);
+      const profile = user.profile || {};
+      const syncRes: any = await api.auth.syncUser(
+        user._key,
+        profile.trueName || profile.nickName,
+        user.mobile,
+        user.app,
+        user.appHigh,
+        profile.avatar,
+        profile.email
+      );
+      if (syncRes.status === 200) {
+        commit("setUser", user);
+      }
     } else {
       commit("clearUser");
     }
+  },
+  logout({ commit }) {
+    commit("clearUser");
   },
 };
 

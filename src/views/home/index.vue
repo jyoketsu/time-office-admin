@@ -2,20 +2,21 @@
   <el-container class="root">
     <el-aside width="200px"><leftMenu /></el-aside>
     <el-container>
-      <el-header>Header</el-header>
-      <el-main>Main</el-main>
+      <el-header><topHead /></el-header>
+      <el-main><router-view></router-view></el-main>
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import LeftMenu from "./LeftMenu.vue";
+import TopHead from "./TopHead.vue";
 
 export default defineComponent({
-  components: { LeftMenu },
+  components: { LeftMenu, TopHead },
   setup() {
     const router = useRouter();
     const store = useStore();
@@ -38,10 +39,8 @@ export default defineComponent({
   height: 100%;
 }
 .el-header {
-  background-color: #b3c0d1;
-  color: var(--el-text-color-primary);
-  text-align: center;
-  line-height: 60px;
+  height: 48px;
+  border-bottom: 1px solid #e0e4ef;
 }
 
 .el-aside {
@@ -50,7 +49,7 @@ export default defineComponent({
 }
 
 .el-main {
-  background-color: #e9eef3;
+  background-color: $contentBg;
   width: 100%;
   height: 100%;
 }

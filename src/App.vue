@@ -33,4 +33,7 @@ export default defineComponent({
 body {
   margin: unset;
 }
+*:not(input):not(textarea) {
+  user-select: none;
+}
 </style>

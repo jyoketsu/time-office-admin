@@ -892,12 +892,37 @@ const comment = {
   },
 };
 
+const card = {
+  addCard(name: string, icon: string) {
+    return request.post(API_URL + "/card", {
+      name,
+      icon,
+    });
+  },
+  editCard(cardKey: string, name: string, icon: string) {
+    return request.post(API_URL + "/card", {
+      cardKey,
+      name,
+      icon,
+    });
+  },
+  getCards() {
+    return request.get(API_URL + "/card");
+  },
+  deleteCard(cardKey: string) {
+    return request.delete(API_URL + "/card", {
+      cardKey,
+    });
+  },
+};
+
 export default {
   auth,
   options,
   node,
   share,
   comment,
+  card,
   setToken: (_token: string) => {
     localStorage.setItem("auth_token", _token);
     token = _token;

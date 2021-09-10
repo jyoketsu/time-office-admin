@@ -59,7 +59,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .root {
   position: absolute;
   width: 100%;
@@ -120,6 +120,10 @@ export default defineComponent({
   width: 154px;
   height: 50px;
   border-radius: 30px;
+  background-color: $mainColor;
+}
+.button:hover {
+  background-color: $mainColor;
 }
 @keyframes waveBack {
   0% {

@@ -11,6 +11,7 @@
         class="el-menu-vertical"
         @open="handleOpen"
         @close="handleClose"
+        :router="true"
         background-color="#474747"
         text-color="#fff"
         active-text-color="#1ca8b3"
@@ -20,8 +21,8 @@
             <i class="el-icon-postcard"></i>
             <span>卡片管理</span>
           </template>
-          <el-menu-item index="1-1">卡片字段</el-menu-item>
-          <el-menu-item index="1-2">卡片类型</el-menu-item>
+          <el-menu-item index="card">卡片列表</el-menu-item>
+          <el-menu-item index="field-type">字段类型</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </div>
