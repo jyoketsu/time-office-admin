@@ -1,90 +1,51 @@
 <template>
   <div class="card-field-wrapper">
-    <div class="table-wrapper">
-      <el-table :data="tableData" height="100%" style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
-        </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
-      </el-table>
-    </div>
+    <el-card
+      v-for="field in cardFieldTypeList"
+      :key="field.fieldType"
+      shadow="hover"
+    >
+      <div class="field-card">
+        <i
+          class="card-icon"
+          :style="`background-image: url(${field.fieldIcon})`"
+        ></i>
+        <div class="text item">
+          {{ field.fieldType }}
+        </div>
+      </div>
+    </el-card>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent, ref } from "vue";
-
-export default defineComponent({
-  setup() {
-    const handleSizeChange = (val: number) => {
-      console.log(`每页 ${val} 条`);
-    };
-    const handleCurrentChange = (val: number) => {
-      console.log(`当前页: ${val}`);
-    };
-    return {
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-      ],
-      handleEdit: (index: number, row: any) => {
-        console.log(index, row);
-      },
-      handleDelete: (index: number, row: any) => {
-        console.log(index, row);
-      },
-    };
-  },
-});
+<script setup lang="ts">
+import { cardFieldTypeList } from "./data";
 </script>
 <style scoped>
 .card-field-wrapper {
-  width: 100%;
-  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 15px;
+  row-gap: 15px;
+}
+.text {
+  font-size: 14px;
+}
+
+.item {
+  padding: 18px 0;
+}
+
+.field-card {
+  height: 30px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
-.table-wrapper {
-  padding: 20px;
-  background-color: white;
-  flex: 1;
-  overflow: hidden;
-}
-.page-wrapper {
-  padding: 0 20px 20px 20px;
-  background-color: white;
+.card-icon {
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>

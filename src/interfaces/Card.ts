@@ -1,5 +1,5 @@
 export interface Card {
-	_key:string;
+  _key: string;
   name: string;
   icon: string;
 }

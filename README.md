@@ -1,11 +1,29 @@
-# Vue 3 + Typescript + Vite
+# time-office-admin
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+## 简介
 
-## Recommended IDE Setup
+time-office-admin 是一个后台管理系统。基于 `vue3 + TypeScript + vue-router + vuex + elementPlus + vite` 开发。
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## 使用技术
 
-## Type Support For `.vue` Imports in TS
+- [node](http://nodejs.org/) 和 [git](https://git-scm.com/) -项目开发环境
+- [Es6+](http://es6.ruanyifeng.com/) - es6
+- [Vite](https://www.pipipi.net/vite/) - vite
+- [Vue3](https://v3.cn.vuejs.org/) - Vue
+- [Vue-Router](https://next.router.vuejs.org/zh/) - ue-router@4
+- [Vuex](https://next.vuex.vuejs.org/zh/index.html) - vuex
+- [Element-Plus](https://element-plus.gitee.io/#/zh-CN) - ui
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+## 安装
+```
+yarn
+```
+
+## 启动服务
+```
+yarn dev
+```
+## 打包发布
+```
+yarn build
+```

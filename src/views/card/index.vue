@@ -10,7 +10,10 @@
               type="primary"
               icon="el-icon-circle-plus"
               circle
-              @click="detailVisible = true"
+              @click="
+                detailVisible = true;
+                isAdd = true;
+              "
             ></el-button>
           </template>
           <template #default="scope">
@@ -49,6 +52,7 @@ export default defineComponent({
     watchEffect(() => {
       if (user.value) {
         store.dispatch("card/getCardList");
+        store.dispatch("auth/getUploadToken");
       }
     });
     return {

@@ -1,11 +1,12 @@
 import api from "../../util/api";
-import { MutationTree, ActionTree, Module } from "vuex";
+import { MutationTree, ActionTree } from "vuex";
 import { AuthState } from "../types/AuthState";
 import { RootState } from "../types/RootState";
 
 const state: AuthState = {
   user: null,
   expired: false,
+  uploadToken: null,
 };
 
 const mutations: MutationTree<AuthState> = {
@@ -19,6 +20,9 @@ const mutations: MutationTree<AuthState> = {
     state.user = null;
     state.expired = true;
     localStorage.clear();
+  },
+  setUploadToken(state, data) {
+    state.uploadToken = data;
   },
 };
 
@@ -48,6 +52,12 @@ const actions: ActionTree<AuthState, RootState> = {
   },
   logout({ commit }) {
     commit("clearUser");
+  },
+  async getUploadToken({ commit }) {
+    const res: any = await api.auth.getUptoken();
+    if (res.statusCode === "200") {
+      commit("setUploadToken", res.result);
+    }
   },
 };
 
