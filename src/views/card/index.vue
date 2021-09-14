@@ -52,7 +52,6 @@ export default defineComponent({
     watchEffect(() => {
       if (user.value) {
         store.dispatch("card/getCardList");
-        store.dispatch("auth/getUploadToken");
       }
     });
     return {

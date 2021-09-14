@@ -20,13 +20,13 @@ export interface CardFieldType {
   // 精度
   precision?: 0 | 1 | 2 | 3 | 4;
   // 选项
-  optionArr?: object[];
+  optionArr?: CardOption[];
   // 对齐方式
   alignment?: "left" | "right" | "center";
   // 评分图标
   subIcon?: string;
   // 评分最高值
-  maxScore?: number;
+  maxScore?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   // 数据数量
   limitNum?: number;
   // 数字单位
@@ -35,6 +35,9 @@ export interface CardFieldType {
   thousandthShow?: boolean;
   // 货币符号
   symbol?: string;
-  // 附件地址
-  urlList?: string[];
+}
+
+export interface CardOption {
+  name: string;
+  color: string;
 }

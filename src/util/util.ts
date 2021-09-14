@@ -27,3 +27,15 @@ export const guid = (len?: number, radix?: number) => {
   }
   return uuid.join("");
 };
+
+// 千分位
+export const get_thousand_num = (num: number) => {
+  return (num || 0).toString().replace(/\d+/, function (n) {
+    var len = n.length;
+    if (len % 3 === 0) {
+      return n.replace(/(\d{3})/g, ",$1").slice(1);
+    } else {
+      return n.slice(0, len % 3) + n.slice(len % 3).replace(/(\d{3})/g, ",$1");
+    }
+  });
+};
