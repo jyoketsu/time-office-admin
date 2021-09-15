@@ -2,6 +2,7 @@ import api from "../../util/api";
 import { MutationTree, ActionTree } from "vuex";
 import { RootState } from "../types/RootState";
 import { CommonState } from "../types/CommonState";
+import { ElMessage } from "element-plus";
 
 const state: CommonState = {
   iconList: [],
@@ -18,6 +19,8 @@ const actions: ActionTree<CommonState, RootState> = {
     const res: any = await api.auth.getIcons(1, 1000);
     if (res.status === 200) {
       commit("setIconList", res.data);
+    } else {
+      ElMessage.error(res.msg);
     }
   },
 };

@@ -7,6 +7,9 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Caom4.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
+    regex: "^.{1,100}$",
   },
   {
     fieldType: "多行文本",
@@ -14,6 +17,9 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdUHJ.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
+    regex: "^.{1,500}$",
   },
   {
     fieldType: "开关",
@@ -21,6 +27,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cy5dO.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "货币",
@@ -28,6 +36,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdtuF.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     symbol: "",
     alignment: "left",
     precision: 2,
@@ -38,6 +48,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cd83V.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     precision: 1,
   },
   {
@@ -46,6 +58,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cd390.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     limitNum: 1,
   },
   {
@@ -54,6 +68,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CyIoD.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     optionArr: [],
   },
   {
@@ -62,6 +78,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cy7JH.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     optionArr: [],
   },
   {
@@ -70,6 +88,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdQNn.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     limitNum: 1,
   },
   {
@@ -78,6 +98,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdMAs.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     subIcon: "",
     maxScore: 5,
   },
@@ -87,6 +109,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdA9P.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "数字",
@@ -94,6 +118,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cdu7j.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
     unit: "",
     thousandthShow: true,
     precision: 1,
@@ -104,6 +130,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdZjS.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "姓名",
@@ -111,6 +139,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdE1f.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "电话",
@@ -118,6 +148,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CdVc8.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "邮箱",
@@ -125,6 +157,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cdmng.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "地址",
@@ -132,6 +166,8 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4CyTFe.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
   {
     fieldType: "身份证",
@@ -139,5 +175,7 @@ export const cardFieldTypeList: CardFieldType[] = [
     fieldIcon: "https://z3.ax1x.com/2021/09/13/4Cy4eK.png",
     fieldName: "",
     meaning: "",
+    show: true,
+    beQuery: true,
   },
 ];

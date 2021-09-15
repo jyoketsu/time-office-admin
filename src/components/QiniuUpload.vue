@@ -12,18 +12,28 @@
   </el-upload>
 </template>
 <script setup lang="ts">
-import { computed, ref, watchEffect } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { guid } from "../util/util";
 const store = useStore();
 const upload_qiniu_url = "https://upload.qiniup.com";
 const upload_qiniu_addr = "https://cdn-icare.qingtime.cn/";
-const user = computed(() => store.state.auth.user);
+
+const props = defineProps<{ url: string }>();
+const emit = defineEmits<{
+  (e: "handle-change", imageUrl: string): void;
+}>();
+
 const uploadToken = computed(() => store.state.auth.uploadToken);
+
 const imageUrl = ref("");
 const qiniuData = ref({
   key: "",
   token: uploadToken.value,
+});
+
+onMounted(() => {
+  store.dispatch("auth/getUploadToken");
 });
 
 watchEffect(() => {
@@ -33,9 +43,7 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  if (user.value) {
-    store.dispatch("auth/getUploadToken");
-  }
+  imageUrl.value = props.url;
 });
 
 const beforeUpload = (file: File) => {
@@ -56,6 +64,7 @@ const beforeUpload = (file: File) => {
 };
 const handleSuccess = (res: any) => {
   imageUrl.value = `${upload_qiniu_addr}${res.key}`;
+  emit("handle-change", imageUrl.value);
 };
 </script>
 <style scoped>

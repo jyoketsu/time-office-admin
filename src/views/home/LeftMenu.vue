@@ -35,12 +35,8 @@ import { defineComponent } from "vue";
 export default defineComponent({
   setup() {
     return {
-      handleOpen: (key: string, keyPath: string) => {
-        console.log(key, keyPath);
-      },
-      handleClose: (key: string, keyPath: string) => {
-        console.log(key, keyPath);
-      },
+      handleOpen: (key: string, keyPath: string) => {},
+      handleClose: (key: string, keyPath: string) => {},
     };
   },
 });

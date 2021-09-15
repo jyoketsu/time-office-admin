@@ -16,10 +16,7 @@
           :key="icon._key"
           class="icon-item"
           :style="`background-image:url(${icon.url})`"
-          @click="
-            iconUrl = icon.url;
-            dialogVisible = false;
-          "
+          @click="handleClick(icon.url)"
         ></div>
       </div>
     </el-dialog>
@@ -31,7 +28,10 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
-defineProps<{ iconUrl: string | null }>();
+const props = defineProps<{ iconUrl: string | null }>();
+const emit = defineEmits<{
+  (e: "click", url: string): void;
+}>();
 
 const iconList = computed(() => store.state.common.iconList);
 
@@ -42,6 +42,11 @@ watchEffect(() => {
     store.dispatch("common/getIconList");
   }
 });
+
+const handleClick = (url: string) => {
+  emit("click", url);
+  dialogVisible.value = false;
+};
 </script>
 <style scoped>
 .icon-list-wrapper {

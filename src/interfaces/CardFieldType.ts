@@ -1,5 +1,5 @@
 export interface CardFieldType {
-  // _key: string;
+  _key?: string;
   // // 关联的卡片id
   // cardKey: string;
   // 字段类型（此条字段的中文解释）
@@ -35,6 +35,7 @@ export interface CardFieldType {
   thousandthShow?: boolean;
   // 货币符号
   symbol?: string;
+  beReserve?: boolean;
 }
 
 export interface CardOption {

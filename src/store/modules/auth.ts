@@ -2,6 +2,7 @@ import api from "../../util/api";
 import { MutationTree, ActionTree } from "vuex";
 import { AuthState } from "../types/AuthState";
 import { RootState } from "../types/RootState";
+import { ElMessage } from "element-plus";
 
 const state: AuthState = {
   user: null,
@@ -45,6 +46,8 @@ const actions: ActionTree<AuthState, RootState> = {
       );
       if (syncRes.status === 200) {
         commit("setUser", user);
+      } else {
+        ElMessage.error("获取用户信息失败！");
       }
     } else {
       commit("clearUser");
@@ -57,6 +60,8 @@ const actions: ActionTree<AuthState, RootState> = {
     const res: any = await api.auth.getUptoken();
     if (res.statusCode === "200") {
       commit("setUploadToken", res.result);
+    } else {
+      ElMessage.error("获取qiniu-token出错！");
     }
   },
 };

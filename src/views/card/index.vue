@@ -11,13 +11,20 @@
               icon="el-icon-circle-plus"
               circle
               @click="
+                selectedRow = { _key: '', name: '', icon: '' };
                 detailVisible = true;
                 isAdd = true;
               "
             ></el-button>
           </template>
           <template #default="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+            <el-button
+              size="mini"
+              @click="
+                selectedRow = scope.row;
+                isAdd = false;
+                detailVisible = true;
+              "
               >编辑</el-button
             >
             <el-button
@@ -40,6 +47,7 @@
   </div>
 </template>
 <script lang="ts">
+import { ElMessageBox } from "element-plus";
 import { computed, defineComponent, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 import CardDetail from "./CardDetail.vue";
@@ -49,18 +57,19 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const user = computed(() => store.state.auth.user);
+
     watchEffect(() => {
       if (user.value) {
         store.dispatch("card/getCardList");
       }
     });
+
     return {
       cardList: computed(() => store.state.card.cardList),
-      handleEdit: (index: number, row: any) => {
-        console.log(index, row);
-      },
       handleDelete: (index: number, row: any) => {
-        console.log(index, row);
+        ElMessageBox.confirm(`确定要删除【${row.name}】吗？`).then(() => {
+          store.dispatch("card/deleteCard", row._key);
+        });
       },
       detailVisible: ref(false),
       isAdd: ref(false),

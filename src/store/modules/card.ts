@@ -2,9 +2,11 @@ import api from "../../util/api";
 import { MutationTree, ActionTree } from "vuex";
 import { RootState } from "../types/RootState";
 import { CardState } from "../types/CardState";
+import { ElMessage } from "element-plus";
 
 const state: CardState = {
   cardList: [],
+  cardDetail: [],
 };
 
 const mutations: MutationTree<CardState> = {
@@ -25,6 +27,15 @@ const mutations: MutationTree<CardState> = {
   clearCardList(state) {
     state.cardList = [];
   },
+  setCardDetail(state, data) {
+    state.cardDetail = data;
+  },
+  addCardDetail(state, data) {
+    state.cardDetail.push(data);
+  },
+  updateCardDetail(state, { index, data }) {
+    state.cardDetail[index] = data;
+  },
 };
 
 const actions: ActionTree<CardState, RootState> = {
@@ -32,28 +43,62 @@ const actions: ActionTree<CardState, RootState> = {
     const res: any = await api.card.getCards();
     if (res.status === 200) {
       commit("setCardList", res.data);
+    } else {
+      ElMessage.error(res.msg);
     }
   },
-  async addCard({ commit }, { name, icon }) {
-    const res: any = await api.card.addCard(name, icon);
+  async addCard({ commit }, { name, icon, cardFieldArr }) {
+    const res: any = await api.card.addCard(name, icon, cardFieldArr);
     if (res.status === 200) {
       commit("addCard", res.data);
+      ElMessage.success("新建卡片成功！");
+    } else {
+      ElMessage.error(res.msg);
     }
   },
-  async updateCard({ commit }, { cardKey, name, icon }) {
-    const res: any = await api.card.editCard(cardKey, name, icon);
+  async updateCard({ commit }, { id, name, icon }) {
+    const res: any = await api.card.editCard(id, name, icon);
     if (res.status === 200) {
       commit("updateCardList", res.data);
+      ElMessage.success("卡片更新成功！");
+    } else {
+      ElMessage.error(res.msg);
     }
   },
   async deleteCard({ commit }, cardKey: string) {
     const res: any = await api.card.deleteCard(cardKey);
     if (res.status === 200) {
       commit("deleteCard", cardKey);
+    } else {
+      ElMessage.error(res.msg);
     }
   },
   clearCardList({ commit }) {
     commit("clearCardList");
+  },
+  async getCardDetail({ commit }, cardKey: string) {
+    const res: any = await api.card.getCardDetail(cardKey);
+    if (res.status === 200) {
+      commit("setCardDetail", res.data);
+    } else {
+      ElMessage.error(res.msg);
+    }
+  },
+  async addCardField({ commit }, field) {
+    const res: any = await api.card.addCardField(field);
+    if (res.status === 200) {
+      commit("addCardDetail", res.data);
+    } else {
+      ElMessage.error(res.msg);
+    }
+  },
+  async editCardField({ commit }, { index, field }) {
+    const res: any = await api.card.editCardField(field);
+    if (res.status === 200) {
+      commit("updateCardDetail", { index, data: res.data });
+    } else {
+      ElMessage.error(res.msg);
+    }
   },
 };
 

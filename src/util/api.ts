@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CardFieldType } from "../interfaces/CardFieldType";
 const AUTH_URL = "https://baokudata.qingtime.cn/sgbh";
 const API_URL = "https://timeosdata.qingtime.cn";
 let token: string | null = localStorage.getItem("auth_token");
@@ -893,14 +894,15 @@ const comment = {
 };
 
 const card = {
-  addCard(name: string, icon: string) {
+  addCard(name: string, icon: string, cardFieldArr: CardFieldType[]) {
     return request.post(API_URL + "/card", {
       name,
       icon,
+      cardFieldArr,
     });
   },
   editCard(cardKey: string, name: string, icon: string) {
-    return request.post(API_URL + "/card", {
+    return request.patch(API_URL + "/card", {
       cardKey,
       name,
       icon,
@@ -913,6 +915,15 @@ const card = {
     return request.delete(API_URL + "/card", {
       cardKey,
     });
+  },
+  getCardDetail(cardKey: string) {
+    return request.get(API_URL + "/card/detail", { cardKey });
+  },
+  addCardField(field: CardFieldType) {
+    return request.post(API_URL + "/card/field", { ...field });
+  },
+  editCardField(field: CardFieldType) {
+    return request.patch(API_URL + "/card/field", { ...field });
   },
 };
 

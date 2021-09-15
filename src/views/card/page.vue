@@ -93,12 +93,8 @@ export default defineComponent({
           address: "上海市普陀区金沙江路 1518 弄",
         },
       ],
-      handleEdit: (index: number, row: any) => {
-        console.log(index, row);
-      },
-      handleDelete: (index: number, row: any) => {
-        console.log(index, row);
-      },
+      handleEdit: (index: number, row: any) => {},
+      handleDelete: (index: number, row: any) => {},
       handleSizeChange,
       handleCurrentChange,
       currentPage: ref(1),
