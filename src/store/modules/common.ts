@@ -6,11 +6,15 @@ import { ElMessage } from "element-plus";
 
 const state: CommonState = {
   iconList: [],
+  loading: false,
 };
 
 const mutations: MutationTree<CommonState> = {
   setIconList(state, data) {
     state.iconList = data;
+  },
+  setLoading(state, data) {
+    state.loading = data;
   },
 };
 

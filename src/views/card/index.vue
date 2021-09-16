@@ -1,7 +1,12 @@
 <template>
   <div class="card-type-wrapper">
     <div class="table-wrapper">
-      <el-table :data="cardList" height="100%" style="width: 100%">
+      <el-table
+        :data="cardList"
+        v-loading="loading"
+        height="100%"
+        style="width: 100%"
+      >
         <el-table-column prop="name" label="卡片名称" width="180">
         </el-table-column>
         <el-table-column align="right">
@@ -57,6 +62,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const user = computed(() => store.state.auth.user);
+    const loading = computed(() => store.state.common.loading);
 
     watchEffect(() => {
       if (user.value) {
@@ -78,6 +84,7 @@ export default defineComponent({
         name: "",
         icon: "",
       }),
+      loading,
     };
   },
 });

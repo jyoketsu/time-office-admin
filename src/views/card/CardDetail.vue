@@ -18,7 +18,12 @@
 
     <CardFieldTypes @click="handleClickAddField" />
     <div class="table-wrapper">
-      <el-table :data="extraFields" height="100%" style="width: 100%">
+      <el-table
+        :data="extraFields"
+        v-loading="loading"
+        height="100%"
+        style="width: 100%"
+      >
         <el-table-column prop="meaning" label="字段名称" width="180">
         </el-table-column>
         <el-table-column prop="fieldName" label="字段名" width="180">
@@ -76,6 +81,7 @@ const emit = defineEmits<{
 }>();
 
 const cardDetail = computed(() => store.state.card.cardDetail);
+const loading = computed(() => store.state.common.loading);
 
 const extraFields = ref<CardFieldType[]>([]);
 const fieldOptionsVisible = ref(false);
@@ -150,6 +156,7 @@ const commit = (form: any) => {
             icon: form.icon,
           });
         }
+        emit("close");
       } else {
         ElMessage.error("请正确输入！");
       }

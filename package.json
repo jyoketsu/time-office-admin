@@ -1,13 +1,16 @@
 {
   "name": "time-office-admin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+    "serve": "vite preview",
+    "scp": "scp -r dist/* root@132.232.47.47:/home/work/websites/admin.working.cn",
+    "deploy": "yarn build && yarn scp"
   },
   "dependencies": {
     "axios": "^0.21.4",
+    "element-plus": "1.1.0-beta.9",
     "vue": "^3.2.6",
     "vue-router": "4.0.11",
     "vuex": "4.0.2"
@@ -15,7 +18,6 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.0",
     "@vue/compiler-sfc": "^3.2.6",
-    "element-plus": "1.1.0-beta.9",
     "sass": "^1.39.0",
     "typescript": "^4.3.2",
     "vite": "^2.5.2",

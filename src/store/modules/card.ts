@@ -40,8 +40,10 @@ const mutations: MutationTree<CardState> = {
 
 const actions: ActionTree<CardState, RootState> = {
   async getCardList({ commit }) {
+    commit("common/setLoading", true, { root: true });
     const res: any = await api.card.getCards();
     if (res.status === 200) {
+      commit("common/setLoading", false, { root: true });
       commit("setCardList", res.data);
     } else {
       ElMessage.error(res.msg);
@@ -77,8 +79,10 @@ const actions: ActionTree<CardState, RootState> = {
     commit("clearCardList");
   },
   async getCardDetail({ commit }, cardKey: string) {
+    commit("common/setLoading", true, { root: true });
     const res: any = await api.card.getCardDetail(cardKey);
     if (res.status === 200) {
+      commit("common/setLoading", false, { root: true });
       commit("setCardDetail", res.data);
     } else {
       ElMessage.error(res.msg);
