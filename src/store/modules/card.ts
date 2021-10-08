@@ -2,7 +2,8 @@ import api from "../../util/api";
 import { MutationTree, ActionTree } from "vuex";
 import { RootState } from "../types/RootState";
 import { CardState } from "../types/CardState";
-import { ElMessage } from "element-plus";
+import { useToast } from "balm-ui";
+const $toast = useToast();
 
 const state: CardState = {
   cardList: [],
@@ -46,25 +47,25 @@ const actions: ActionTree<CardState, RootState> = {
       commit("common/setLoading", false, { root: true });
       commit("setCardList", res.data);
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
   async addCard({ commit }, { name, icon, cardFieldArr }) {
     const res: any = await api.card.addCard(name, icon, cardFieldArr);
     if (res.status === 200) {
       commit("addCard", res.data);
-      ElMessage.success("新建卡片成功！");
+      $toast({ message: "新建卡片成功！", position: "top" });
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
   async updateCard({ commit }, { id, name, icon }) {
     const res: any = await api.card.editCard(id, name, icon);
     if (res.status === 200) {
       commit("updateCardList", res.data);
-      ElMessage.success("卡片更新成功！");
+      $toast({ message: "卡片更新成功！", position: "top" });
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
   async deleteCard({ commit }, cardKey: string) {
@@ -72,7 +73,7 @@ const actions: ActionTree<CardState, RootState> = {
     if (res.status === 200) {
       commit("deleteCard", cardKey);
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
   clearCardList({ commit }) {
@@ -85,7 +86,7 @@ const actions: ActionTree<CardState, RootState> = {
       commit("common/setLoading", false, { root: true });
       commit("setCardDetail", res.data);
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
   async addCardField({ commit }, field) {
@@ -93,7 +94,7 @@ const actions: ActionTree<CardState, RootState> = {
     if (res.status === 200) {
       commit("addCardDetail", res.data);
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
   async editCardField({ commit }, { index, field }) {
@@ -101,7 +102,7 @@ const actions: ActionTree<CardState, RootState> = {
     if (res.status === 200) {
       commit("updateCardDetail", { index, data: res.data });
     } else {
-      ElMessage.error(res.msg);
+      $toast(res.msg);
     }
   },
 };

@@ -24,10 +24,18 @@ watchEffect(() => {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-body {
-  margin: unset;
+*,
+:after,
+:before {
+  box-sizing: border-box;
 }
 *:not(input):not(textarea) {
   user-select: none;
+}
+body {
+  margin: 0;
+}
+.mdc-menu-surface {
+  max-height: 50vh !important;
 }
 </style>

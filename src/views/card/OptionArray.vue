@@ -1,32 +1,29 @@
 <template>
   <div class="field-options">
     <div class="option-item" v-for="(option, index) in options">
-      <el-input
-        class="option-item-input"
-        v-model="option.name"
-        autocomplete="off"
-      ></el-input>
-      <el-button icon="el-icon-delete" circle @click="handleDelete(index)" />
+      <ui-textfield class="option-item-input" v-model="option.name" />
+      <ui-icon-button icon="delete" circle @click="handleDelete(index)" />
     </div>
-    <el-button
-      class="add-button"
-      type="primary"
-      round
-      icon="el-icon-plus"
-      @click="handleAdd"
-      >新增一个选项</el-button
+    <ui-button class="add-button" outlined icon="add" @click="handleAdd"
+      >新增一个选项</ui-button
     >
   </div>
 </template>
 <script setup lang="ts">
 import { CardOption } from "../../interfaces/CardFieldType";
+import { useAlert } from "balm-ui";
+const $alert = useAlert();
 const props = defineProps<{ options: CardOption[] }>();
 
 const handleAdd = () => {
   props.options.push({ name: "", color: "#FFF" });
 };
 const handleDelete = (index: number) => {
-  props.options.splice(index, 1);
+  if (props.options.length > 1) {
+    props.options.splice(index, 1);
+  } else {
+    $alert("至少要有一个选项！");
+  }
 };
 </script>
 <style scoped>

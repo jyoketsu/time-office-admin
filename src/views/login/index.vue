@@ -11,7 +11,7 @@ export default defineComponent({
     const user = computed(() => store.state.auth.user);
     watchEffect(() => {
       if (user.value) {
-        router.push("/");
+        router.push("/card");
       }
     });
     onMounted(() => {

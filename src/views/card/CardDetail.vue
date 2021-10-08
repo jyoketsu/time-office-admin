@@ -1,67 +1,63 @@
 <template>
-  <el-dialog
-    custom-class="card-detail"
-    :title="`${isAdd ? '新增' : '修改'}卡片`"
+  <ui-dialog
     v-model="visible"
-    @closed="emit('close')"
-    :fullscreen="true"
-    style="display: flex; flex-direction: column"
+    @confirm="commit"
+    @close="emit('close')"
+    fullscreen
+    maskClosable
   >
-    <el-form :model="form" :rules="rules" ref="ruleForm">
-      <el-form-item label="卡片名称" prop="name">
-        <el-input v-model="form.name" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="卡片图标" prop="icon">
-        <QiniuUpload :url="form.icon" @handle-change="handleChangeIcon" />
-      </el-form-item>
-    </el-form>
-
-    <CardFieldTypes @click="handleClickAddField" />
-    <div class="table-wrapper">
-      <el-table
-        :data="extraFields"
-        v-loading="loading"
-        height="100%"
-        style="width: 100%"
-      >
-        <el-table-column prop="meaning" label="字段名称" width="180">
-        </el-table-column>
-        <el-table-column prop="fieldName" label="字段名" width="180">
-        </el-table-column>
-        <el-table-column prop="fieldType" label="字段类型" width="180">
-        </el-table-column>
-        <el-table-column align="right">
-          <template #default="scope">
-            <el-button
-              v-if="!scope.row.beReserve"
-              icon="el-icon-edit"
-              circle
-              @click="handleEditField(scope.$index, scope.row)"
-            ></el-button>
-            <el-button
-              v-if="!scope.row.beReserve"
-              icon="el-icon-delete"
-              circle
-              @click="handleDeleteField(scope.$index)"
-            ></el-button>
+    <ui-dialog-title>{{
+      `${isAdd ? "新增" : "编辑"}${form.name || "卡片"}`
+    }}</ui-dialog-title>
+    <ui-dialog-content>
+      <ui-form nowrap item-margin-bottom="16" label-width="80">
+        <template #default="{ subitemClass }">
+          <ui-form-field>
+            <label class="required">卡片名称：</label>
+            <ui-textfield v-model="form.name"></ui-textfield>
+          </ui-form-field>
+          <ui-form-field>
+            <label>卡片图标：</label>
+            <QiniuUpload :url="form.icon" @handle-change="handleChangeIcon" />
+          </ui-form-field>
+        </template>
+      </ui-form>
+      <CardFieldTypes @click="handleClickAddField" />
+      <div class="table-wrapper">
+        <ui-table
+          :data="extraFields"
+          :thead="thead"
+          :tbody="tbody"
+          fullwidth
+          fixedHeader
+          :scroll="{ y: 100 }"
+        >
+          <template #actions="{ data }">
+            <ui-icon
+              v-if="!data.beReserve"
+              @click="handleEditField(data)"
+              style="cursor: pointer"
+              >edit</ui-icon
+            >
+            <ui-icon
+              v-if="!data.beReserve"
+              @click="handleDeleteField(data)"
+              style="cursor: pointer"
+              >delete</ui-icon
+            >
           </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="emit('close')">取 消</el-button>
-        <el-button type="primary" @click="commit(form)">确 定</el-button>
-      </span>
-    </template>
-    <CardFieldOptions
-      :index="currentRowIndex"
-      :visible="fieldOptionsVisible"
-      :form="selectedRow"
-      :is-edit="!isAdd"
-      @close="fieldOptionsVisible = false"
-    />
-  </el-dialog>
+        </ui-table>
+      </div>
+    </ui-dialog-content>
+    <ui-dialog-actions acceptText="保存" cancelText="取消"></ui-dialog-actions>
+  </ui-dialog>
+  <CardFieldOptions
+    :index="currentRowIndex"
+    :visible="fieldOptionsVisible"
+    :form="selectedRow"
+    :is-edit="!isAdd"
+    @close="fieldOptionsVisible = false"
+  />
 </template>
 <script lang="ts" setup>
 import { computed, ref, watchEffect } from "vue";
@@ -71,7 +67,9 @@ import CardFieldTypes from "./CardFieldTypes.vue";
 import CardFieldOptions from "./CardFieldOptions.vue";
 import QiniuUpload from "../../components/QiniuUpload.vue";
 import { useStore } from "vuex";
-import { ElMessage } from "element-plus";
+import { useAlert } from "balm-ui";
+
+const $alert = useAlert();
 
 const store = useStore();
 
@@ -87,20 +85,21 @@ const extraFields = ref<CardFieldType[]>([]);
 const fieldOptionsVisible = ref(false);
 const currentRowIndex = ref(0);
 const selectedRow = ref<CardFieldType | null>(null);
-const ruleForm = ref<any>(null);
 
-const rules = {
-  name: [
-    { required: true, message: "请输入卡片名称", trigger: "change" },
-    {
-      min: 1,
-      max: 50,
-      message: "长度在 1 到 50 个字符",
-      trigger: "change",
+const thead = ["字段名称", "字段名", "字段类型", "操作"];
+const tbody = [
+  "meaning",
+  "fieldName",
+  {
+    field: "fieldType",
+    fn: (data: CardFieldType) => {
+      return data["fieldType"] || "预定义类型";
     },
-  ],
-  icon: [{ required: true, message: "请上传卡片图标", trigger: "change" }],
-};
+  },
+  {
+    slot: "actions",
+  },
+];
 
 watchEffect(() => {
   if (props.form._key && props.visible) {
@@ -129,45 +128,58 @@ const handleClickAddField = (field: CardFieldType) => {
     extraFields.value.push({ ...field, ...{ cardKey: props.form._key } });
   }
 };
-const handleDeleteField = (index: number) => {
+const handleDeleteField = (row: CardFieldType) => {
+  let index;
+  if (row._key) {
+    index = extraFields.value.findIndex((item) => item._key === row._key);
+  } else {
+    index = extraFields.value.findIndex((item) => item.rowId === row.rowId);
+  }
   extraFields.value.splice(index, 1);
 };
 
-const handleEditField = (index: number, row: any) => {
+const handleEditField = (row: CardFieldType) => {
+  let index;
+  if (row._key) {
+    index = extraFields.value.findIndex((item) => item._key === row._key);
+  } else {
+    index = extraFields.value.findIndex((item) => item.rowId === row.rowId);
+  }
   fieldOptionsVisible.value = true;
   selectedRow.value = row;
   currentRowIndex.value = index;
 };
 
-const commit = (form: any) => {
-  if (ruleForm.value) {
-    ruleForm.value.validate((valid: any) => {
-      if (valid) {
-        if (props.isAdd) {
-          store.dispatch("card/addCard", {
-            name: form.name,
-            icon: form.icon,
-            cardFieldArr: extraFields.value,
-          });
-        } else {
-          store.dispatch("card/updateCard", {
-            id: form._key,
-            name: form.name,
-            icon: form.icon,
-          });
-        }
-        emit("close");
+const commit = (result: boolean) => {
+  if (result) {
+    const form = props.form;
+    if (form.name && form.icon) {
+      if (props.isAdd) {
+        store.dispatch("card/addCard", {
+          name: form.name,
+          icon: form.icon,
+          cardFieldArr: extraFields.value,
+        });
       } else {
-        ElMessage.error("请正确输入！");
+        store.dispatch("card/updateCard", {
+          id: form._key,
+          name: form.name,
+          icon: form.icon,
+        });
       }
-    });
+      emit("close");
+    } else {
+      $alert("请正确输入！");
+    }
+  } else {
+    emit("close");
   }
 };
 </script>
 <style scoped>
 .table-wrapper {
-  flex: 1;
-  overflow: hidden;
+  margin-top: 16px;
+  min-height: 50vh;
 }
 </style>
 <style>

@@ -1,11 +1,11 @@
 <template>
   <div class="card-field-wrapper">
-    <el-card
+    <ui-card
       v-for="field in cardFieldTypeList"
       :key="field.fieldType"
       shadow="hover"
     >
-      <div class="field-card">
+      <ui-card-text class="field-card">
         <i
           class="card-icon"
           :style="`background-image: url(${field.fieldIcon})`"
@@ -13,8 +13,8 @@
         <div class="text item">
           {{ field.fieldType }}
         </div>
-      </div>
-    </el-card>
+      </ui-card-text>
+    </ui-card>
   </div>
 </template>
 <script setup lang="ts">
@@ -26,9 +26,10 @@ import { cardFieldTypeList } from "./data";
   grid-template-columns: repeat(4, 1fr);
   column-gap: 15px;
   row-gap: 15px;
+  padding: 15px;
 }
 .text {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .item {
@@ -36,14 +37,14 @@ import { cardFieldTypeList } from "./data";
 }
 
 .field-card {
-  height: 30px;
+  height: 80px;
   display: flex;
   align-items: center;
 }
 .card-icon {
-  margin-right: 5px;
-  width: 15px;
-  height: 15px;
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

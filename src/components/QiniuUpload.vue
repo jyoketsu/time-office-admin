@@ -1,24 +1,15 @@
 <template>
-  <el-upload
-    class="avatar-uploader"
-    :action="upload_qiniu_url"
-    :data="qiniuData"
-    :before-upload="beforeUpload"
-    :on-success="handleSuccess"
-    :show-file-list="false"
-  >
+  <ui-file accept="image/*" class="avatar-uploader" @change="beforeUpload">
     <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-  </el-upload>
+    <ui-icon v-else>add</ui-icon>
+  </ui-file>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { guid } from "../util/util";
+import { uploadImg } from "../util/uploadImage";
 const store = useStore();
-const upload_qiniu_url = "https://upload.qiniup.com";
-const upload_qiniu_addr = "https://cdn-icare.qingtime.cn/";
-
 const props = defineProps<{ url: string }>();
 const emit = defineEmits<{
   (e: "handle-change", imageUrl: string): void;
@@ -27,29 +18,17 @@ const emit = defineEmits<{
 const uploadToken = computed(() => store.state.auth.uploadToken);
 
 const imageUrl = ref("");
-const qiniuData = ref({
-  key: "",
-  token: uploadToken.value,
-});
 
 onMounted(() => {
   store.dispatch("auth/getUploadToken");
 });
 
 watchEffect(() => {
-  if (uploadToken.value) {
-    qiniuData.value.token = uploadToken.value;
-  }
-});
-
-watchEffect(() => {
   imageUrl.value = props.url;
 });
 
-const beforeUpload = (file: File) => {
-  qiniuData.value.key = `${guid(8, 16)}${
-    file.name ? file.name.substr(file.name.lastIndexOf(".")) : ".png"
-  }`;
+const beforeUpload = async (files: any[]) => {
+  const file = files[0].sourceFile;
   const isJPG = file.type === "image/jpeg";
   const isPNG = file.type === "image/png";
   const isLt2M = file.size / 1024 / 1024 < 2;
@@ -61,10 +40,13 @@ const beforeUpload = (file: File) => {
     alert("图片大小不能超过 2MB!");
     return false;
   }
-};
-const handleSuccess = (res: any) => {
-  imageUrl.value = `${upload_qiniu_addr}${res.key}`;
-  emit("handle-change", imageUrl.value);
+
+  if (uploadToken.value) {
+    const url = await uploadImg(uploadToken.value, file);
+    if (url && typeof url === "string") {
+      emit("handle-change", url);
+    }
+  }
 };
 </script>
 <style scoped>
@@ -77,6 +59,9 @@ const handleSuccess = (res: any) => {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;

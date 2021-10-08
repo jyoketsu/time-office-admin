@@ -1,38 +1,38 @@
 <template>
-  <el-dropdown style="width: 125px">
-    <el-button round icon="el-icon-circle-plus el-button-">添加字段</el-button>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item
-          class="card-field-type"
-          v-for="field in cardFieldTypeList"
-          :key="field.fieldType"
-          @click="emit('click', field)"
-        >
-          <i
-            class="card-icon"
-            :style="`background-image: url(${field.fieldIcon})`"
-          ></i>
-          <div :key="field.fieldType" class="text item">
-            {{ field.fieldType }}
-          </div>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
-  <div class="card-field-types"></div>
+  <ui-menu-anchor>
+    <ui-button raised @click="open = true">添加字段</ui-button>
+    <ui-menu v-model="open" @selected="onSelected">
+      <ui-menuitem
+        class="card-field-type"
+        v-for="field in cardFieldTypes"
+        :key="field.fieldType"
+      >
+        <i
+          class="card-icon"
+          :style="`background-image: url(${field.fieldIcon})`"
+        ></i>
+        <ui-menuitem-text> {{ field.fieldType }}</ui-menuitem-text>
+      </ui-menuitem>
+    </ui-menu>
+  </ui-menu-anchor>
 </template>
 <script setup lang="ts">
+import { computed, ref } from "vue";
 import { CardFieldType } from "../../interfaces/CardFieldType";
+import { guid } from "../../util/util";
 import { cardFieldTypeList } from "../cardFieldType/data";
+
 const emit = defineEmits<{
   (e: "click", cardFieldType: CardFieldType): void;
 }>();
+const open = ref(false);
+const cardFieldTypes = computed(() => cardFieldTypeList);
+const onSelected = (data: any) => {
+  const cardFieldType = cardFieldTypes.value[data.index];
+  emit("click", { ...cardFieldType, ...{ rowId: guid(8, 16) } });
+};
 </script>
 <style scoped>
-.card-field-types {
-  width: 150px;
-}
 .card-field-type {
   display: flex;
   align-items: center;

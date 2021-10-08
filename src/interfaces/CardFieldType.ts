@@ -1,5 +1,6 @@
 export interface CardFieldType {
   _key?: string;
+  rowId?: string;
   // // 关联的卡片id
   // cardKey: string;
   // 字段类型（此条字段的中文解释）

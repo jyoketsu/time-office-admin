@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "axios": "^0.21.4",
-    "element-plus": "1.1.0-beta.9",
+    "balm-ui": "^9.37.3",
+    "qiniu-js": "3.0.3",
     "vue": "^3.2.6",
     "vue-router": "4.0.11",
     "vuex": "4.0.2"

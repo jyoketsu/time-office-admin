@@ -10,14 +10,14 @@ export default defineComponent({
     const user = computed(() => store.state.auth.user);
     const handleLogin = () => {
       if (user.value) {
-        router.push("/");
+        router.push("/card");
       } else {
         const redirect = `${window.location.protocol}//${window.location.host}/#/login`;
         const logo = "https://mindcute.com/icon/logo.svg";
         const screenWidth = window.screen.width;
         const screenHeight = window.screen.height;
         window.open(
-          `https://account.qingtime.cn?app=48&apphigh=36&logo=${logo}&redirect=${redirect}`,
+          `https://account.qingtime.cn?app=48&apphigh=37&logo=${logo}&redirect=${redirect}`,
           "new",
           `width=360, height=588, resizable=false, toolbar=no, menubar=no, location=no, status=no, top=${
             (screenHeight - 588) / 2
@@ -53,9 +53,12 @@ export default defineComponent({
     <div class="wave-back"></div>
     <div class="wave-middle"></div>
     <div class="wave-front"></div>
-    <el-button class="button" type="primary" @click="handleLogin"
-      >进入系统</el-button
-    >
+    <ui-fab extended class="button" @click="handleLogin">
+      <template #before="{ iconClass }">
+        <ui-icon :class="iconClass">space_dashboard</ui-icon>
+      </template>
+      <span>进入系统</span>
+    </ui-fab>
   </div>
 </template>
 
@@ -117,14 +120,8 @@ export default defineComponent({
   position: absolute;
   top: 38px;
   right: 5vw;
-  width: 154px;
-  height: 50px;
-  border-radius: 30px;
-  background-color: $mainColor;
 }
-.button:hover {
-  background-color: $mainColor;
-}
+
 @keyframes waveBack {
   0% {
     left: -50%;

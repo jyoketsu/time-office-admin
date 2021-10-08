@@ -2,9 +2,19 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import ElementPlus from "element-plus";
-import zhCn from "element-plus/es/locale/lang/zh-cn";
-import "./assets/style/element-variables.scss";
+import BalmUI from "balm-ui"; // Official Google Material Components
+import BalmUIPlus from "balm-ui-plus"; // BalmJS Team Material Components
+import "balm-ui-css";
 
 const app = createApp(App);
-app.use(store).use(router).use(ElementPlus, { locale: zhCn }).mount("#app");
+app
+  .use(store)
+  .use(router)
+  .use(BalmUI, {
+    $theme: {
+      // (Optional) New in 9.28.0, See ThemeColor type in APIs.
+      primary: "#2B8A9E",
+    },
+  })
+  .use(BalmUIPlus)
+  .mount("#app");

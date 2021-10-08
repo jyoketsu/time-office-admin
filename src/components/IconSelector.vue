@@ -7,19 +7,23 @@
       @click="dialogVisible = true"
     ></div>
     <div v-else class="icon-none-wrapper" @click="dialogVisible = true">
-      <div class="el-icon-plus icon-none"></div>
+      <ui-icon :size="56">add</ui-icon>
     </div>
-    <el-dialog title="图标库" v-model="dialogVisible" width="30%">
-      <div class="icon-list-wrapper">
-        <div
-          v-for="icon in iconList"
-          :key="icon._key"
-          class="icon-item"
-          :style="`background-image:url(${icon.url})`"
-          @click="handleClick(icon.url)"
-        ></div>
-      </div>
-    </el-dialog>
+
+    <ui-dialog v-model="dialogVisible" width="30%">
+      <ui-dialog-title>图标库</ui-dialog-title>
+      <ui-dialog-content>
+        <div class="icon-list-wrapper">
+          <div
+            v-for="icon in iconList"
+            :key="icon._key"
+            class="icon-item"
+            :style="`background-image:url(${icon.url})`"
+            @click="handleClick(icon.url)"
+          ></div>
+        </div>
+      </ui-dialog-content>
+    </ui-dialog>
   </div>
 </template>
 <script setup lang="ts">
@@ -54,7 +58,7 @@ const handleClick = (url: string) => {
   grid-template-columns: repeat(5, 1fr);
   row-gap: 5px;
   column-gap: 5px;
-  max-height: 50vh;
+  height: 50vh;
   overflow: auto;
 }
 .icon,
