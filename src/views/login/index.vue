@@ -26,5 +26,17 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div>login</div>
+  <div class="login"><ui-spinner active></ui-spinner></div>
 </template>
+<style scoped>
+.login {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

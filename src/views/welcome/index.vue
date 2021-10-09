@@ -30,11 +30,16 @@ export default defineComponent({
         e.origin === "https://account.qingtime.cn" &&
         e.data.eventName === "redirect"
       ) {
-        window.location.href = e.data.data;
+        console.log("e.data.eventName", e.data.data);
+        // window.location.href = e.data.data;
+        const newWindow = window.open(e.data.data);
+        window.opener = null;
+        window.open("", "_self");
+        window.close();
       }
     };
     onMounted(() => {
-      window.addEventListener("message", lintenerHandle, false);
+      window.addEventListener("message", lintenerHandle);
       const token = localStorage.getItem("auth_token");
       if (token) {
         store.dispatch("auth/getUserByToken", token);

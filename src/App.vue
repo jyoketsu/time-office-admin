@@ -1,5 +1,6 @@
 <template>
   <router-view></router-view>
+  <div class="loading" v-if="loading"><ui-spinner active></ui-spinner></div>
 </template>
 <script lang="ts" setup>
 import { computed, watchEffect } from "vue";
@@ -9,6 +10,7 @@ import { useStore } from "vuex";
 const router = useRouter();
 const store = useStore();
 const expired = computed(() => store.state.auth.expired);
+const loading = computed(() => store.state.common.loading);
 
 watchEffect(() => {
   if (expired.value) {
@@ -34,6 +36,17 @@ watchEffect(() => {
 }
 body {
   margin: 0;
+}
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1999;
 }
 .mdc-menu-surface {
   max-height: 50vh !important;

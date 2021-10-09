@@ -9,6 +9,7 @@ const routes = [
   {
     path: "/",
     component: Home,
+    redirect: "card",
     children: [
       { path: "card", component: Card },
       { path: "field-type", component: CardFieldType },
