@@ -37,6 +37,10 @@ const mutations: MutationTree<CardState> = {
   updateCardDetail(state, { index, data }) {
     state.cardDetail[index] = data;
   },
+  deleteCardDetail(state, { fieldKey }) {
+    const index = state.cardDetail.findIndex((item) => item._key === fieldKey);
+    state.cardDetail.splice(index, 1);
+  },
 };
 
 const actions: ActionTree<CardState, RootState> = {
@@ -101,6 +105,14 @@ const actions: ActionTree<CardState, RootState> = {
     const res: any = await api.card.editCardField(field);
     if (res.status === 200) {
       commit("updateCardDetail", { index, data: res.data });
+    } else {
+      $toast(res.msg);
+    }
+  },
+  async deleteCardField({ commit }, fieldKey) {
+    const res: any = await api.card.deleteCardField(fieldKey);
+    if (res.status === 200) {
+      commit("deleteCardDetail", { fieldKey });
     } else {
       $toast(res.msg);
     }

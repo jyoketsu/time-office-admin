@@ -112,6 +112,7 @@ const props = defineProps<{
   isEdit: boolean;
 }>();
 const emit = defineEmits<{
+  (e: "saveField", cardFieldType: CardFieldType, index: number): void;
   (e: "close"): void;
 }>();
 
@@ -123,17 +124,10 @@ const handleClickIcon = (url: string) => {
 
 const commit = (result: boolean) => {
   if (result) {
-    if (props.isEdit) {
-      if (props.form?._key) {
-        store.dispatch("card/editCardField", {
-          index: props.index,
-          field: props.form,
-        });
-      } else {
-        store.dispatch("card/addCardField", props.form);
-      }
+    if (props.form) {
+      emit("saveField", props.form, props.index);
+      emit("close");
     }
-    emit("close");
   }
 };
 </script>

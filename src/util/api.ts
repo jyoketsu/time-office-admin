@@ -925,6 +925,9 @@ const card = {
   editCardField(field: CardFieldType) {
     return request.patch(API_URL + "/card/field", { ...field });
   },
+  deleteCardField(fieldKey: string) {
+    return request.delete(API_URL + "/card/field", { _key: fieldKey });
+  },
 };
 
 export default {

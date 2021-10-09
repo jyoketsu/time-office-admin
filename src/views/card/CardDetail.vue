@@ -56,6 +56,7 @@
     :visible="fieldOptionsVisible"
     :form="selectedRow"
     :is-edit="!isAdd"
+    @saveField="handleSaveField"
     @close="fieldOptionsVisible = false"
   />
 </template>
@@ -122,20 +123,38 @@ const handleChangeIcon = (imageUrl: string) => {
 };
 
 const handleClickAddField = (field: CardFieldType) => {
+  fieldOptionsVisible.value = true;
+  if (props.isAdd) {
+    // extraFields.value.push(field);
+    selectedRow.value = field;
+  } else {
+    // extraFields.value.push({ ...field, ...{ cardKey: props.form._key } });
+    selectedRow.value = { ...field, ...{ cardKey: props.form._key } };
+  }
+};
+const handleSaveField = (field: CardFieldType, index: number) => {
   if (props.isAdd) {
     extraFields.value.push(field);
   } else {
-    extraFields.value.push({ ...field, ...{ cardKey: props.form._key } });
+    if (field?._key) {
+      store.dispatch("card/editCardField", {
+        index,
+        field,
+      });
+    } else {
+      store.dispatch("card/addCardField", field);
+    }
   }
 };
 const handleDeleteField = (row: CardFieldType) => {
-  let index;
   if (row._key) {
-    index = extraFields.value.findIndex((item) => item._key === row._key);
+    store.dispatch("card/deleteCardField", row._key);
   } else {
-    index = extraFields.value.findIndex((item) => item.rowId === row.rowId);
+    const index = extraFields.value.findIndex(
+      (item) => item.rowId === row.rowId
+    );
+    extraFields.value.splice(index, 1);
   }
-  extraFields.value.splice(index, 1);
 };
 
 const handleEditField = (row: CardFieldType) => {
