@@ -928,6 +928,9 @@ const card = {
   deleteCardField(fieldKey: string) {
     return request.delete(API_URL + "/card/field", { _key: fieldKey });
   },
+  sortCardField(cardKey: string, keyArr: string[]) {
+    return request.patch(API_URL + "/card/field/order", { cardKey, keyArr });
+  },
 };
 
 export default {

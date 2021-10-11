@@ -33,6 +33,12 @@
           :scroll="{ y: 100 }"
         >
           <template #actions="{ data }">
+            <ui-icon style="cursor: pointer" @click="handleSort(data, true)"
+              >arrow_upward</ui-icon
+            >
+            <ui-icon style="cursor: pointer" @click="handleSort(data, false)"
+              >arrow_downward</ui-icon
+            >
             <ui-icon
               v-if="!data.beReserve"
               @click="handleEditField(data)"
@@ -68,9 +74,10 @@ import CardFieldTypes from "./CardFieldTypes.vue";
 import CardFieldOptions from "./CardFieldOptions.vue";
 import QiniuUpload from "../../components/QiniuUpload.vue";
 import { useStore } from "vuex";
-import { useAlert } from "balm-ui";
+import { useAlert, useConfirm } from "balm-ui";
 
 const $alert = useAlert();
+const $confirm = useConfirm();
 
 const store = useStore();
 
@@ -80,8 +87,6 @@ const emit = defineEmits<{
 }>();
 
 const cardDetail = computed(() => store.state.card.cardDetail);
-const loading = computed(() => store.state.common.loading);
-
 const extraFields = ref<CardFieldType[]>([]);
 const fieldOptionsVisible = ref(false);
 const currentRowIndex = ref(0);
@@ -146,15 +151,49 @@ const handleSaveField = (field: CardFieldType, index: number) => {
     }
   }
 };
-const handleDeleteField = (row: CardFieldType) => {
-  if (row._key) {
-    store.dispatch("card/deleteCardField", row._key);
+
+const handleSort = (row: CardFieldType, up: boolean) => {
+  const index = extraFields.value.findIndex((item) =>
+    item._key ? item._key === row._key : item.rowId === row.rowId
+  );
+  if (up) {
+    if (index === 0) {
+      $alert("不能再往上移动了！");
+    } else {
+      [extraFields.value[index - 1], extraFields.value[index]] = [
+        extraFields.value[index],
+        extraFields.value[index - 1],
+      ];
+    }
   } else {
-    const index = extraFields.value.findIndex(
-      (item) => item.rowId === row.rowId
-    );
-    extraFields.value.splice(index, 1);
+    if (index === extraFields.value.length - 1) {
+      $alert("不能再往下移动了！");
+    } else {
+      [extraFields.value[index], extraFields.value[index + 1]] = [
+        extraFields.value[index + 1],
+        extraFields.value[index],
+      ];
+    }
   }
+};
+
+const handleDeleteField = (row: CardFieldType) => {
+  $confirm({
+    message: `确定要删除【${row.meaning}】吗？`,
+    acceptText: "删除",
+    cancelText: "取消",
+  }).then((result: any) => {
+    if (result) {
+      if (row._key) {
+        store.dispatch("card/deleteCardField", row._key);
+      } else {
+        const index = extraFields.value.findIndex(
+          (item) => item.rowId === row.rowId
+        );
+        extraFields.value.splice(index, 1);
+      }
+    }
+  });
 };
 
 const handleEditField = (row: CardFieldType) => {
@@ -184,6 +223,11 @@ const commit = (result: boolean) => {
           id: form._key,
           name: form.name,
           icon: form.icon,
+        });
+        const keyArr = extraFields.value.map((item) => item._key);
+        store.dispatch("card/sortCardField", {
+          cardKey: form._key,
+          keyArr,
         });
       }
       emit("close");

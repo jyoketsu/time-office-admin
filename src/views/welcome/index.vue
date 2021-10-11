@@ -32,10 +32,7 @@ export default defineComponent({
       ) {
         console.log("e.data.eventName", e.data.data);
         // window.location.href = e.data.data;
-        const newWindow = window.open(e.data.data);
-        window.opener = null;
-        window.open("", "_self");
-        window.close();
+        router.push(e.data.data);
       }
     };
     onMounted(() => {

@@ -117,6 +117,13 @@ const actions: ActionTree<CardState, RootState> = {
       $toast(res.msg);
     }
   },
+  async sortCardField({ commit }, { cardKey, keyArr }) {
+    const res: any = await api.card.sortCardField(cardKey, keyArr);
+    if (res.status === 200) {
+    } else {
+      $toast(res.msg);
+    }
+  },
 };
 
 export default {
