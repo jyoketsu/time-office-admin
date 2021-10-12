@@ -7,9 +7,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
-import { guid } from "../util/util";
 import { uploadImg } from "../util/uploadImage";
+import { useAlert } from "balm-ui";
 const store = useStore();
+const $alert = useAlert();
 const props = defineProps<{ url: string }>();
 const emit = defineEmits<{
   (e: "handle-change", imageUrl: string): void;
@@ -33,11 +34,11 @@ const beforeUpload = async (files: any[]) => {
   const isPNG = file.type === "image/png";
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isJPG && !isPNG) {
-    alert("图片只能是 JPG/PNG 格式!");
+    $alert("图片只能是 JPG/PNG 格式!");
     return false;
   }
   if (!isLt2M) {
-    alert("图片大小不能超过 2MB!");
+    $alert("图片大小不能超过 2MB!");
     return false;
   }
 

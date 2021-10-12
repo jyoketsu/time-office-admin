@@ -2,6 +2,7 @@ import api from "../../util/api";
 import { MutationTree, ActionTree } from "vuex";
 import { AuthState } from "../types/AuthState";
 import { RootState } from "../types/RootState";
+import { useToast } from "balm-ui";
 
 const state: AuthState = {
   user: null,
@@ -46,7 +47,8 @@ const actions: ActionTree<AuthState, RootState> = {
       if (syncRes.status === 200) {
         commit("setUser", user);
       } else {
-        alert('"获取用户信息失败！"');
+        const $toast = useToast();
+        $toast({ message: "获取用户信息失败！", position: "top" });
       }
     } else {
       commit("clearUser");
@@ -60,7 +62,8 @@ const actions: ActionTree<AuthState, RootState> = {
     if (res.statusCode === "200") {
       commit("setUploadToken", res.result);
     } else {
-      alert("获取qiniu-token出错！");
+      const $toast = useToast();
+      $toast({ message: "获取qiniu-token出错！", position: "top" });
     }
   },
 };

@@ -1,5 +1,6 @@
 import * as qiniu from "qiniu-js";
 import { guid } from "./util";
+import { useToast } from "balm-ui";
 
 export const uploadImage = (
   uptoken: string,
@@ -32,7 +33,8 @@ export const uploadImage = (
   let observer = {
     next() {},
     error(err: any) {
-      alert("上传失败！");
+      const $toast = useToast();
+      $toast({ message: "上传失败！", position: "top" });
       console.log("---上传失败---", err);
     },
     complete(res: any) {
@@ -106,7 +108,8 @@ export const uploadImg = (
           }
         },
         error(err: any) {
-          alert("上传失败！");
+          const $toast = useToast();
+          $toast({ message: "上传失败！", position: "top" });
           console.log("---上传失败---", err);
         },
         complete(res: any) {
