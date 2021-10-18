@@ -33,10 +33,16 @@
           :scroll="{ y: 100 }"
         >
           <template #actions="{ data }">
-            <ui-icon style="cursor: pointer" @click="handleSort(data, true)"
+            <ui-icon
+              style="cursor: pointer"
+              v-if="!data.beReserve"
+              @click="handleSort(data, true)"
               >arrow_upward</ui-icon
             >
-            <ui-icon style="cursor: pointer" @click="handleSort(data, false)"
+            <ui-icon
+              style="cursor: pointer"
+              v-if="!data.beReserve"
+              @click="handleSort(data, false)"
               >arrow_downward</ui-icon
             >
             <ui-icon
@@ -138,6 +144,7 @@ const handleClickAddField = (field: CardFieldType) => {
   }
 };
 const handleSaveField = (field: CardFieldType, index: number) => {
+  field.limitNum = field.limitNum ? 100 : 1;
   if (props.isAdd) {
     extraFields.value.push(field);
   } else {

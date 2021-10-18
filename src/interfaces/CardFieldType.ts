@@ -14,6 +14,7 @@ export interface CardFieldType {
   meaning: string;
   // 正则表达式
   regex?: any;
+  required?: boolean;
   // 是否显示
   show?: boolean;
   // 是否可查询
