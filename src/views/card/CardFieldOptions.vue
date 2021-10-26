@@ -165,7 +165,7 @@ const handleClickIcon = (url: string) => {
 const commit = (result: boolean) => {
   if (result) {
     if (props.form) {
-      if (!props.form.symbol) {
+      if (props.form.symbol !== undefined && !props.form.symbol) {
         props.form.symbol = "CNY";
       }
       emit("saveField", props.form, props.index);

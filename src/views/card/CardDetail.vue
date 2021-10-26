@@ -144,7 +144,9 @@ const handleClickAddField = (field: CardFieldType) => {
   }
 };
 const handleSaveField = (field: CardFieldType, index: number) => {
-  field.limitNum = field.limitNum ? 100 : 1;
+  if (field.limitNum !== undefined) {
+    field.limitNum = field.limitNum ? 100 : 1;
+  }
   if (props.isAdd) {
     extraFields.value.push(field);
   } else {
